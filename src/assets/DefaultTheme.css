@@ -1,0 +1,130 @@
+/** Table styling **/
+.qtw {
+  width: 100%;
+}
+
+.qtw :deep(.qtc) {
+  display: flex;
+  flex-flow: row nowrap;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.qtw :deep(table) {
+  --background-color: #ffffff;
+
+  --font-color: #000000;
+  --font-size: 16px;
+
+  --border-color: #dbdbdb;
+  --border-width: 1px;
+
+  --padding: 0.5rem 0.625rem;
+
+  background-color: var(--background-color);
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: var(--font-size);
+  line-height: 1.5;
+  text-align: left;
+  width: 100%;
+}
+
+.qtw :deep(tr) {
+  color: var(--font-color);
+}
+
+.qtw :deep(th), .qtw :deep(td) {
+  --border-width: 0 0 1px;
+
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: var(--border-width);
+  padding: var(--padding);
+}
+
+.qtw :deep(thead) th {
+  --border-width: 1px 0 2px;
+}
+
+.qtw :deep(.text-center) {
+  text-align: center;
+}
+
+/** Pagination styling **/
+.qtw :deep(.qtp) {
+  --background-color: #ffffff;
+  --border-color: transparent;
+  --border-width: 1px;
+  --border-radius: 0;
+  --font-color: #000000;
+  --font-size: 0.875rem;
+
+  --hover-background-color: #eef1f5;
+  --hover-font-color: #000000;
+  --hover-border-color: transparent;
+
+  --active-background-color: #6e45e2;
+  --active-font-color: #ffffff;
+  --active-border-color: transparent;
+
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-size: var(--font-size);
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.qtw :deep(.qtp) ul {
+  display: flex;
+  font-size: inherit;
+  list-style: none;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+}
+
+.qtw :deep(.qtp) ul li {
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: var(--border-width);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  color: var(--font-color);
+  display: inline-block;
+  line-height: 1.5;
+  justify-content: center;
+  margin: 0.125rem;
+  text-align: center;
+}
+
+.qtw :deep(.qtp) ul li a {
+  color: inherit;
+  cursor: inherit;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  text-decoration: none;
+}
+
+.qtw :deep(.qtp) ul li a:hover {
+  text-decoration: none;
+}
+
+.qtw :deep(.qtp) ul li:hover:not([active="true"]):not([disabled="true"]) {
+  --background-color: var(--hover-background-color);
+  --font-color: var(--hover-font-color);
+  --border-color: var(--hover-border-color);
+}
+
+.qtw :deep(.qtp) ul li[active="true"] {
+  --background-color: var(--active-background-color);
+  --font-color: var(--active-font-color);
+  --border-color: var(--active-border-color);
+}
+
+.qtw :deep(.qtp) ul li[disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
