@@ -52,7 +52,7 @@ export default {
         else {
           data = this.getProperty(row, desc);
         }
-        columns = [...columns, data];
+        columns = [...columns, (data || {})];
       }
       return columns;
     }

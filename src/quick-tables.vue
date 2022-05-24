@@ -135,7 +135,7 @@ export default /*#__PURE__*/defineComponent({
   methods: {
     validatePaginationConfig() {
       this.paginationConfig.disabled = true;
-      if(!this.pagination || this.pagination === undefined) {
+      if(!this.pagination || this.pagination === undefined || Object.keys(this.pagination).length < 1) {
         return;
       }
       let config = this.paginationConfig;
@@ -260,7 +260,7 @@ export default /*#__PURE__*/defineComponent({
         if(this.onBuildRows !== undefined) {
           rows = this.onBuildRows(rows) || [];
         }
-        this.bodyRows = rows;
+        this.bodyRows = rows || [];
       }
       this.isLoading = false;
     },
