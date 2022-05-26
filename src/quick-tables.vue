@@ -2,6 +2,7 @@
 import TableHead from './components/TableHead';
 import TableBody from './components/TableBody';
 import PaginationNav from './components/PaginationNav';
+import draggableRows from './utils/draggableRows';
 import { defineComponent } from 'vue';
 
 export default /*#__PURE__*/defineComponent({
@@ -22,7 +23,8 @@ export default /*#__PURE__*/defineComponent({
         headers: this.request?.headers || {},
         method: this.request?.method || 'GET',
         dataKey: this.request?.dataKey,
-        extend: this.request?.extend || {}
+        extend: this.request?.extend || {},
+        queries: this.request?.queries || {}
       },
       paginationConfig: {
         disabled: true,
@@ -48,7 +50,7 @@ export default /*#__PURE__*/defineComponent({
         orderBy: this.filter?.orderBy || false,
         orderDir: this.filter?.orderDir || (this.filter?.map?.asc || 'asc'),
         orderByKey: this.filter?.orderByKey || 'order_by',
-        orderDirKey: this.filter?.orderDirKey || (this.filter?.orderBy ? 'order_dir' : false),
+        orderDirKey: this.filter?.orderDirKey || 'order_dir',
         limit: this.filter?.limit || 0,
         limitKey: this.filter?.limitKey || 'limit',
         map: {
@@ -101,7 +103,11 @@ export default /*#__PURE__*/defineComponent({
       type: String,
       default: 'QuickTables'
     },
-    onBuildRows: Function
+    onBuildRows: Function,
+    draggableRows: {
+      type: [Object, Boolean],
+      default: () => ({})
+    }
   },
 
   // Provide specific data to children components.
@@ -129,6 +135,10 @@ export default /*#__PURE__*/defineComponent({
     this.validatePaginationConfig();
     if(this.isStatic || this.requestOnMount) {
       this.loadTable();
+    }
+    // Enable draggable rows.
+    if(this.draggableRows || Object.keys(this.draggableRows).length > 0) {
+      draggableRows(this.$refs.quickTable, this.draggableRows);
     }
   },
 
@@ -329,9 +339,12 @@ export default /*#__PURE__*/defineComponent({
       }
       if(this.filterConfig.orderBy) {
         queries[this.filterConfig.orderByKey] = this.filterConfig.orderBy;
+        if(this.filterConfig.orderDirKey) {
+          queries[this.filterConfig.orderDirKey] = this.filterConfig.orderDir;
+        }
       }
-      if(this.filterConfig.orderDirKey) {
-        queries[this.filterConfig.orderDirKey] = this.filterConfig.orderDir;
+      for(let [key, value] of Object.entries(this.requestConfig.queries)) {
+        queries[key] = value;
       }
       if(Object.keys(queries).length < 1) {
         return '';
@@ -378,7 +391,8 @@ export default /*#__PURE__*/defineComponent({
 <template>
   <div :class="classPrefix+' qtw'">
     <div :class="classPrefix+'Container qtc'">
-      <table :class="classPrefix+'Table'">
+      <table :class="classPrefix+'Table'"
+        ref="quickTable">
         <TableHead v-if="headers.length > 0"
           :headers="headers"
           :class="classPrefix+'Thead'" />

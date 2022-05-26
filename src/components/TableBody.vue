@@ -27,7 +27,7 @@ export default {
         let data = undefined;
         if(typeof desc === 'object') {
           // Value property is a hardcoded value.
-          if(desc.value !== undefined) {
+          if(desc.value) {
             data = desc.value;
           }
           // Data property will contain the name of the property from the returned data.
