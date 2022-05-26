@@ -106,7 +106,7 @@ export default /*#__PURE__*/defineComponent({
     onBuildRows: Function,
     draggableRows: {
       type: [Object, Boolean],
-      default: () => ({})
+      default: false
     }
   },
 
