@@ -1,10 +1,43 @@
-# Vue 3 Quick tables
+# Vue 3 QuickTables
+QuickTables is a quick table component for Vue 3. This package is still in development. Tests are still to come. Use at your own discretion.
 
-This package is a WIP. Full readme followed by docs and tests to come.
+[![npm](https://img.shields.io/npm/v/vue-quick-tables.svg?color=%236e45e2)](https://www.npmjs.com/package/vue-quick-tables)
+
+## Installation
+### Install via NPM
+
+```
+npm install vue-quick-tables
+```
 
 ## Usage
 
-### Loading static data
+#### Global
+You can register QuickTables globally:
+```js
+import { createApp } from 'vue';
+import QuickTables from 'vue-quick-tables';
+const app = createApp(App);
+app.component('QuickTables', QuickTables);
+```
+
+#### Local
+Locally install QuickTables by importing the component.
+```js
+import QuickTables from 'vue-quick-tables';
+
+export default {
+  components: {
+    QuickTables
+  }
+}
+```
+
+### Basic Usage
+
+#### Loading static data
+
+The component accepts static data as an **array** via the `rows` property.
 
 ```js
 <template>
@@ -29,58 +62,214 @@ This package is a WIP. Full readme followed by docs and tests to come.
 </script>
 ```
 
-### Loading server data
+#### Loading server data
+
+You can pull data from your backend server using the `request` property.
+
+```js
+request: {
+  url: {your_API_endpoint}, // The URL to your data endpoint
+  headers: {Accept: 'application/json'}, // Request headers
+  method: 'GET', // The request method
+  dataKey: 'data', // The data key in your response. (i.e. Laravel collections return data in the 'data' key.)
+  extend: {withCredentials: true}, // Pass additional properties to FETCH or Axios
+  queries: {} // Pass additional query params for the request
+}
+```
+
+Without the `headers` or `columns` properties every item in the returned data rows will be dumped into the table.
 
 ```js
 <template>
   <QuickTables
     :request="request"
-    :headers="headers"
-    :columns="column"
-    :pagination="pagination"
-    use-axios // Optional if you prefer axios. JS fetch is used by default.
+    />
+</template>
+```
+
+Use the `columns` property to manage the returned data.
+```js
+columns: [
+  {
+    data: 'name', // The data key of the column in each row
+    sort: true, // Determines if the column is sortable
+    class: 'text-center', // Custom class is applied to the <td> element
+    value: false, // Hardcoded column value
+    render: ({data, row}) => data.toUpperCase() // Define a custom callback to manipulate the output
+  },
+
+  'name', // A string instead of an object acts as a data key. Use this if you don't need any of the above customization
+]
+```
+
+The `headers` property will set the table headers.
+```js
+headers: [
+  {
+    value: 'Name', // The header label
+    class: 'text-center', // Custom class is applied to the <th> element
+    sort: true // Determines if the column is sortable. This overrides the sort key in the `columns` property
+  },
+  'Name' // Use a string instead of an object if you don't need the class or sort properties
+]
+```
+
+##### Using Axios
+The component uses [JS Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) by default. If you prefer Axios then add the `use-axios` property.
+
+```js
+<template>
+  <QuickTables
+    :request="request"
+    use-axios
+    />
+</template>
+```
+
+##### Loading data on mount
+By default the component will not fetch any data until it has been told to. The `request-on-mount` property will tell the component to fetch data as soon as it has finished mounting.
+```js
+<template>
+  <QuickTables
+    :request="request"
+    request-on-mount
+    />
+</template>
+```
+
+#### Pagination
+The `pagination` property allows you to enable server-side pagination for your data.
+```js
+pagination: {
+  pageKey: 'page', // The query key used by your endpoint
+  type: 'numbers', // Sets the pagination type. See all options below
+  tabs: 4, // The number of tabs to display when using numbered pagination
+  showCount: true, // Shows the number of results
+  map: {
+    currentPage: 'meta.current_page', // The data key for the current page
+    lastPage: 'meta.last_page', // The data key for the last page
+    from: 'meta.from',  // The data key for the current page from (start)
+    to: 'meta.to', // The data key for the current page to (end)
+    total: 'meta.total' // The data key for the total number of pages
+  }
+}
+```
+
+You can fetch a specific page with the `page` property.
+```js
+<template>
+  <QuickTables
+    :request="request"
+    :page="2"
+    />
+</template>
+```
+
+##### Types of pagination
+| Value     | Description |
+|-----------|-------------|
+| `simple`  | Includes a previous and next button. This is the default option.
+| `numbers`  | Numbered pagination. The `tab` option can be used to set the number of buttons.
+| `full`  | Includes first, last, previous and next buttons.
+| `simple_numbers`  | Numbered pagination with previous and net buttons.
+| `full_numbers`  | Numbered pagination with first, last, previous and next buttons.
+| `first_last_numbers`  | Numbered pagination with first and last buttons.
+
+#### Filtering data
+The `filter` property can be used to filter data through searching, sorting and limiting.
+
+##### Search
+```js
+filter: {
+  search: 'Your search string', // The string to search
+  searchKey: 'search' // The search query key used by your endpoint
+}
+```
+
+##### Sorting
+```js
+filter: {
+  orderBy: 'created_at', // The column on your endpoint to sort by
+  orderDir: 'desc', // The direction to sort. Accepts either asc or desc
+  orderByKey: 'order_by', // The order by query key used by your endpoint
+  orderDirKey: 'order_dir', // The order direction query key used by your endpoint
+  map: {
+    asc: 'asc', // The value used by your endpoint to represent ascending order
+    desc: 'desc' // The value used by your endpoint to represent descending order
+  }
+}
+```
+
+##### Limiting results
+```js
+filter: {
+  limit: 20, // The number of results to return
+  limitKey: 'limit' // The limit query key used by your endpoint
+}
+```
+
+#### Language
+You can change the default language used across the table with the `messages` property.
+```js
+messages: {
+  loading: 'Fetching new data..',
+  noRows: 'No results found.',
+  prev: 'Previous',
+  next: 'Next',
+  first: 'First',
+  last: 'Last',
+  counter: function({total, to, from}) {
+    return `Showing ${from} to ${to} of ${total} entries`
+  }
+}
+```
+
+#### Styling the table
+The component includes a basic theme located in `assets/DefaultTheme.css`.
+
+You can set a class prefix for each part of the component which will make writing a custom theme easier.
+```js
+<template>
+  <QuickTables
+    :classPrefix="QuickTables"
+    />
+</template>
+```
+
+#### Manipulating server data
+Use the `onBuildRows` property to manipulate data before it is rendered. You must ensure your callback returns the rows as an **array**.
+
+```js
+<template>
+  <QuickTables
+    :onBuildRows="onBuildRowsCallback"
     />
 </template>
 
 <script>
-  import QuickTables from './vue-quick-tables';
   export default {
-    props: {
-      headers: ['ID', 'Name', 'Actions'],
-      request: {
-        url: API_URL,
-        headers: {
-          Accept: 'application/json'
-        },
-        dataKey: 'data'
-      },
-      columns: {
-        {
-          data: 'id',
-          sort: true
-        },
-        {
-          data: 'name',
-          sort: true
-        },
-        {
-          render: function({row}) {
-            return `<a href="/users/${row.id}">View</a>`
-          }
-        }
-      },
-      // Server-side pagination
-      pagination: {
-        type: 'numbers',
-        map: {
-          currentPage: 'meta.current_page',
-          lastPage: 'meta.last_page',
-          from: 'meta.from',
-          to: 'meta.to',
-          total: 'meta.total'
+    data() {
+      return {
+        onBuildRowsCallback: (rows) => {
+          // Do something with the rows.
+          return updatedRows;
         }
       }
     }
   }
 </script>
 ```
+
+---
+
+## Authors
+- [Rhys Hall](https://github.com/rhysnhall)
+- Chris Orrell
+
+## Contributing
+Help improve this package by contributing.
+
+Before opening a pull request, please first discuss the proposed changes via Github issue or <a href="mailto:hello@rhyshall.com">email</a>.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/korinsensei/vue-quick-tables/blob/master/LICENSE.md) file for details
