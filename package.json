@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:korinsensei/vue-quick-tables"
+    "url": "git@github.com:rhysnhall/vue-quick-tables"
   },
   "main": "dist/quick-tables.ssr.js",
   "browser": "dist/quick-tables.esm.js",
