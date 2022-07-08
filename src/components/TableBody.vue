@@ -52,6 +52,9 @@ export default {
         else {
           data = this.getProperty(row, desc);
         }
+        if(desc._uuid) {
+          data._uuid = desc._uuid;
+        }
         columns = [...columns, (data || {})];
       }
       return columns;
@@ -61,7 +64,7 @@ export default {
     preparedRows() {
       return Object.entries(this.rows).map(([, row]) => {
         if(typeof row !== 'object') {
-          this.prepareRow([row])
+          return this.prepareRow([row])
         }
         return this.prepareRow(row);
       })
