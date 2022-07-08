@@ -82,15 +82,31 @@ const globals = {
   vue: 'Vue',
 };
 
+const cssConfig = {
+  input: 'src/assets/DefaultTheme.css',
+  output: {
+    file: 'dist/vue-quick-tables.css',
+    format: 'es'
+  },
+  plugins: [
+    PostCSS({
+      modules: {
+        generateScopedName: '[css]'
+      },
+      extract: true
+    })
+  ]
+};
+
 // Customize configs for individual targets
-const buildFormats = [];
+const buildFormats = [cssConfig];
 if (!argv.format || argv.format === 'es') {
   const esConfig = {
     ...baseConfig,
     input: 'src/entry.esm.js',
     external,
     output: {
-      file: 'dist/quick-tables.esm.js',
+      file: 'dist/vue-quick-tables.esm.js',
       format: 'esm',
       exports: 'named',
     },
@@ -122,7 +138,7 @@ if (!argv.format || argv.format === 'cjs') {
     external,
     output: {
       compact: true,
-      file: 'dist/quick-tables.ssr.js',
+      file: 'dist/vue-quick-tables.ssr.js',
       format: 'cjs',
       name: 'QuickTables',
       exports: 'auto',
@@ -145,7 +161,7 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: 'dist/quick-tables.min.js',
+      file: 'dist/vue-quick-tables.min.js',
       format: 'iife',
       name: 'QuickTables',
       exports: 'auto',

@@ -3,14 +3,14 @@
   width: 100%;
 }
 
-.qtw :deep(.qtc) {
+.qtw .qtc {
   display: flex;
   flex-flow: row nowrap;
   overflow-x: auto;
   width: 100%;
 }
 
-.qtw :deep(table) {
+.qtw table {
   --background-color: #ffffff;
 
   --font-color: #000000;
@@ -30,11 +30,11 @@
   width: 100%;
 }
 
-.qtw :deep(tr) {
+.qtw tr {
   color: var(--font-color);
 }
 
-.qtw :deep(th), .qtw :deep(td) {
+.qtw th, .qtw td {
   --border-width: 0 0 1px;
 
   border-color: var(--border-color);
@@ -43,16 +43,16 @@
   padding: var(--padding);
 }
 
-.qtw :deep(thead) th {
+.qtw thead th {
   --border-width: 1px 0 2px;
 }
 
-.qtw :deep(.text-center) {
+.qtw .text-center {
   text-align: center;
 }
 
 /** Pagination styling **/
-.qtw :deep(.qtp) {
+.qtw .qtp {
   --background-color: #ffffff;
   --border-color: transparent;
   --border-width: 1px;
@@ -76,7 +76,7 @@
   text-align: left;
 }
 
-.qtw :deep(.qtp) ul {
+.qtw .qtp ul {
   display: flex;
   font-size: inherit;
   list-style: none;
@@ -85,7 +85,7 @@
   padding: 0;
 }
 
-.qtw :deep(.qtp) ul li {
+.qtw .qtp ul li {
   background-color: var(--background-color);
   border-color: var(--border-color);
   border-style: solid;
@@ -100,7 +100,7 @@
   text-align: center;
 }
 
-.qtw :deep(.qtp) ul li a {
+.qtw .qtp ul li a {
   color: inherit;
   cursor: inherit;
   display: block;
@@ -108,23 +108,23 @@
   text-decoration: none;
 }
 
-.qtw :deep(.qtp) ul li a:hover {
+.qtw .qtp ul li a:hover {
   text-decoration: none;
 }
 
-.qtw :deep(.qtp) ul li:hover:not([active="true"]):not([disabled="true"]) {
+.qtw .qtp ul li:hover:not([active="true"]):not([disabled="true"]) {
   --background-color: var(--hover-background-color);
   --font-color: var(--hover-font-color);
   --border-color: var(--hover-border-color);
 }
 
-.qtw :deep(.qtp) ul li[active="true"] {
+.qtw .qtp ul li[active="true"] {
   --background-color: var(--active-background-color);
   --font-color: var(--active-font-color);
   --border-color: var(--active-border-color);
 }
 
-.qtw :deep(.qtp) ul li[disabled="true"] {
+.qtw .qtp ul li[disabled="true"] {
   cursor: not-allowed;
   opacity: 0.5;
 }

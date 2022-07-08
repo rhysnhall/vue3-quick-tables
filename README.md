@@ -262,9 +262,54 @@ Use the `onBuildRows` property to manipulate data before it is rendered. You mus
 
 ---
 
-## Authors
-- [Rhys Hall](https://github.com/rhysnhall)
-- Chris Orrell
+## Draggable Rows
+
+Basic support for draggable table rows is available as an optional setting.
+
+Enable draggable rows with the `draggable-rows` attributes.
+
+```js
+<template>
+  <QuickTables
+    draggable-rows />
+</template>
+```
+
+The `draggable-rows` attribute supports the following properties.
+
+| Property     | Default | Description |
+|-----------|-------------|-------------|
+| `draggingClass`  | is-dragging | The class applied to a row while it is being dragged. Use this to apply any styling.
+| `onDrop`  | (row) => {} | Is called when the row is dropped.
+| `onDragStart`  | (row) => {} | Is called when the drag is first initiated.
+
+Both the `onDrop` and `onDragStart` callbacks return the current rows data. Because this data is a proxy you can mutate it in your callbacks which will result in a re-render of that specific row.
+
+```js
+<template>
+  <QuickTables
+    :draggable-rows="draggableConfig" />
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        draggableConfig: {
+          onDrop: this.onDrop
+        }
+      }
+    },
+    methods: {
+      onDrop(rowData) {
+        rowData[0] = 'A new value for the first column!'
+      }
+    }
+  }
+</script>
+```
+
+---
 
 ## Contributing
 Help improve this package by contributing.

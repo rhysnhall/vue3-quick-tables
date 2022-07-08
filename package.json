@@ -12,10 +12,11 @@
     "type": "git",
     "url": "git@github.com:rhysnhall/vue-quick-tables"
   },
-  "main": "dist/quick-tables.ssr.js",
-  "browser": "dist/quick-tables.esm.js",
-  "module": "dist/quick-tables.esm.js",
-  "unpkg": "dist/quick-tables.min.js",
+  "main": "dist/vue-quick-tables.ssr.js",
+  "browser": "dist/vue-quick-tables.esm.js",
+  "module": "dist/vue-quick-tables.esm.js",
+  "unpkg": "dist/vue-quick-tables.min.js",
+  "style": "dist/vue-quick-tables.css",
   "files": [
     "dist/*",
     "src/**/*.vue"
@@ -40,6 +41,7 @@
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
     "@vue/compiler-sfc": "^3.0.11",
+    "axios": "^0.27.2",
     "cross-env": "^7.0.3",
     "minimist": "^1.2.5",
     "postcss": "^8.2.10",

@@ -2,7 +2,7 @@
 import TableHead from './components/TableHead';
 import TableBody from './components/TableBody';
 import PaginationNav from './components/PaginationNav';
-import draggableRows from './utils/draggableRows';
+import Draggable from './utils/_draggable';
 import { defineComponent } from 'vue';
 
 export default /*#__PURE__*/defineComponent({
@@ -71,7 +71,8 @@ export default /*#__PURE__*/defineComponent({
           }
         },
         ...this.messages
-      }
+      },
+      draggableRowsUtil: false
     }
   },
 
@@ -126,19 +127,21 @@ export default /*#__PURE__*/defineComponent({
       setOrder: this.setOrder,
       reload: this.loadTable,
       classPrefix: this.classPrefix,
-      getProperty: this.getProperty
+      getProperty: this.getProperty,
+      draggableRows: this.getDraggableRowsUtil
     }
   },
 
   // Validate and load the table on mount.
   mounted() {
+    // Enable draggable rows.
+    if(this.draggableRows || Object.keys(this.draggableRows).length > 0) {
+      this.draggableRowsUtil = new Draggable(this.$refs.quickTable, this.draggableRows);
+    }
+
     this.validatePaginationConfig();
     if(this.isStatic || this.requestOnMount) {
       this.loadTable();
-    }
-    // Enable draggable rows.
-    if(this.draggableRows || Object.keys(this.draggableRows).length > 0) {
-      draggableRows(this.$refs.quickTable, this.draggableRows);
     }
   },
 
@@ -187,8 +190,17 @@ export default /*#__PURE__*/defineComponent({
       this.paginationConfig.page = page;
       this.loadTable();
     },
+    getDraggableRowsUtil() {
+      return this.draggableRowsUtil;
+    },
+    setBodyRows(rows) {
+      this.bodyRows = rows;
+      if(this.getDraggableRowsUtil()) {
+        this.draggableRowsUtil.setTableRows(this.bodyRows);
+      }
+    },
     getData() {
-      this.bodyRows = [];
+      this.setBodyRows([]);
       this.isLoading = true;
       this.useAxios
         ? this.axiosRequest()
@@ -199,7 +211,7 @@ export default /*#__PURE__*/defineComponent({
       let rows = this.rows;
 
       if(!rows.length) {
-        this.bodyRows = rows;
+        this.setBodyRows([]);
         return;
       }
 
@@ -236,7 +248,7 @@ export default /*#__PURE__*/defineComponent({
         };
       }
 
-      this.bodyRows = rows;
+      this.setBodyRows(rows);
     },
     getProperty(obj, prop) {
       // Split the prop into an array.
@@ -270,12 +282,12 @@ export default /*#__PURE__*/defineComponent({
         if(this.onBuildRows !== undefined) {
           rows = this.onBuildRows(rows) || [];
         }
-        this.bodyRows = rows || [];
+        this.setBodyRows(rows || []);
       }
       this.isLoading = false;
     },
     failedResponse() {
-      this.bodyRows = [];
+      this.setBodyRows([]);
       this.isLoading = false;
     },
     axiosRequest() {
