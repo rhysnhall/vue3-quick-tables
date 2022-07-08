@@ -52,10 +52,10 @@ export default {
         else {
           data = this.getProperty(row, desc);
         }
-        if(desc._uuid) {
-          data._uuid = desc._uuid;
-        }
         columns = [...columns, (data || {})];
+      }
+      if (row._uuid) {
+        columns._uuid = row._uuid;
       }
       return columns;
     }
