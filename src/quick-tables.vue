@@ -407,10 +407,18 @@ export default /*#__PURE__*/defineComponent({
         ref="quickTable">
         <TableHead v-if="headers.length > 0"
           :headers="headers"
-          :class="classPrefix+'Thead'" />
+          :class="classPrefix+'Thead'">
+          <template v-for="(_, slot) in $slots" v-slot:[slot]="scope">
+            <slot :name="slot" v-bind="{...scope}" />
+          </template>
+        </TableHead>
         <TableBody v-if="bodyRows.length > 0"
           :rows="bodyRows"
-          :class="classPrefix+'Tbody'" />
+          :class="classPrefix+'Tbody'">
+          <template v-for="(_, slot) in $slots" v-slot:[slot]="scope">
+            <slot :name="slot" v-bind="{...scope}" />
+          </template>
+        </TableBody>
         <tbody v-if="isLoading"
           :class="classPrefix+'Loading'">
           <tr><td :colspan="headers.length">{{language.loading}}</td></tr>
@@ -426,5 +434,6 @@ export default /*#__PURE__*/defineComponent({
       :tabs="paginationConfig.tabs"
       :showCount="showPaginationCount"
       :class="classPrefix+'PaginationContainer qtp'" />
+    
   </div>
 </template>

@@ -9,6 +9,7 @@
 </template>
 <script>
 export default {
+  name: 'PaginationItem',
   props: {
     active: Boolean,
     callback: Function,

@@ -95,7 +95,6 @@ columns: [
     sort: true, // Determines if the column is sortable
     class: 'text-center', // Custom class is applied to the <td> element
     value: false, // Hardcoded column value
-    render: ({data, row}) => data.toUpperCase() // Define a custom callback to manipulate the output
   },
 
   'name', // A string instead of an object acts as a data key. Use this if you don't need any of the above customization
@@ -112,6 +111,104 @@ headers: [
   },
   'Name' // Use a string instead of an object if you don't need the class or sort properties
 ]
+```
+
+##### Custom HTML
+You can define a custom callback to manipulate the rendered output as raw HTML. The callback will have access to the column `data` and the entire `row`. The render method is only available to columns and not headers.
+
+```js
+columns: [
+  {
+    data: 'name',
+    render: ({data, row}) => `<a href="/item/${row.id}">${data.toUpperCase()}</a>`
+  }
+]
+```
+
+##### Slots
+Both columns and headers can parse in custom Vue Slots. For this to work you need to define a slot name using the `slot` property.
+
+```js
+import Button from './Button';
+
+columns: [
+  {
+    slot: 'button'
+  }
+]
+
+<quick-tables 
+  :columns="columns">
+  <template #button="{id, name}">
+    <Button :item-id="id"
+      :item-name="name" />
+  </template>
+</quick-tables>
+```
+
+Your component will have full access to the rows data.
+
+```js
+<template #button="row">
+  <Button :item-id="row.id" />
+</template>
+```
+
+This also works for the table headers with the exception of there being no row data.
+
+```js
+headers: [
+  {
+    slot: 'item'
+  }
+]
+
+<quick-tables 
+  :headers="headers">
+  <template #item>
+    <span>Custom header!</span>
+  </template>
+</quick-table>
+```
+
+##### Row Classes
+You can add a custom class to the table header row using the `rowClass` property in your header setup.
+
+```js
+headers: [
+  {
+    rowClass: 'bg-cool-gray',
+  },
+  'ID',
+  'Name'
+]
+```
+
+The positioning of the `rowClass` property does not matter as it will not be rendered with the other headers.
+
+Setting a custom class on a body row works a littler differently. You'll need to set a value against the `rowClass` property of each row using the `onBuildRows` callback.
+
+```js
+<template>
+  <QuickTables
+    :onBuildRows="onBuildRowsCallback"
+    />
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        onBuildRowsCallback: (rows) => {
+          for(const[,i] of Object.entries(rows)) {
+            i.rowClass = i.archived ? 'text-muted' : 'text-body';
+          }
+          return rows;
+        }
+      }
+    }
+  }
+</script>
 ```
 
 ##### Using Axios

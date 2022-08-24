@@ -23,6 +23,7 @@
 <script>
 import PaginationList from './PaginationList.vue';
 export default {
+  name: 'PaginationNav',
   components: {
     PaginationList
   },

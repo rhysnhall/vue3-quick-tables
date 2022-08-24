@@ -3,36 +3,31 @@
     @[mayDrag]="drag($event)"
     @[mayDragStop]="endDragEvent()"
     :uuid="row._uuid"
-    :class="row.dragClass"
+    :class="[row.dragClass, row.rowClass]"
     :draggable="dragEnabled">
-    <td v-for="(column, index) in row"
-      :key="index"
-      :class="getClassNames(column)"
-      v-html="formatColumnValue(column)"></td>
+    <template v-for="(column, index) in row"
+      :key="index">
+      <TableRowColumn :column="column">
+        <template v-for="(_, slot) in $slots" v-slot:[slot]="scope">
+          <slot :name="slot" v-bind="{...scope}" />
+        </template>
+      </TableRowColumn>
+    </template>
   </tr>
 </template>
 
 <script>
+import TableRowColumn from "./TableRowColumn";
 export default {
+  name: 'TableBodyRow',
+  components: {
+    TableRowColumn
+  },
   props: {
     row: [Array, Object]
   },
   inject: ['draggableRows'],
   methods: {
-    formatColumnValue: function(column) {
-      if(typeof column === 'object') {
-        return column.value;
-      }
-      return column;
-    },
-    getClassNames: function(column) {
-      if(typeof column === 'object') {
-        if(column.class !== undefined) {
-          return column.class;
-        }
-      }
-      return false;
-    },
     startDragEvent(id) {
       this.draggableRows().setActive(id);
     },

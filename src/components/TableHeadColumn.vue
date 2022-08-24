@@ -1,9 +1,11 @@
 <template>
   <th :class="classNames"
     @click.prevent="sortableCallback">
-    <div v-if="isSortable"
-      :style="theadWrapperStyle">
-      {{columnValue}}
+    <template v-if="slot">
+      <slot :name="slot"></slot>
+    </template>
+    <template v-else-if="isSortable">
+      <span>{{columnValue}}</span>
       <span :class="classPrefix+'Sortable'"
         :style="sortableStyle">
         <UpCarret
@@ -11,7 +13,7 @@
         <DownCarret
           :active="!orderDir || orderDir === descKey" />
       </span>
-    </div>
+    </template>
     <template v-else>
       {{columnValue}}
     </template>
@@ -23,6 +25,7 @@ import DownCarret from './DownCarret';
 import UpCarret from './UpCarret';
 
 export default {
+  name: 'TableHeadColumn',
   components: {
     UpCarret,
     DownCarret
@@ -63,6 +66,12 @@ export default {
       }
       return this.column;
     },
+    slot() {
+      if(typeof this.column === 'object') {
+        return this.column?.slot;
+      }
+      return false;
+    },
     nextOrderDir() {
       return this.orderDir === this.ascKey
         ? this.descKey : this.ascKey;
@@ -84,18 +93,11 @@ export default {
       }
       return sortKey;
     },
-    theadWrapperStyle() {
-      return {
-        'display': 'flex',
-        'flex-flow': 'row nowrap',
-        'align-items': 'center'
-      }
-    },
     sortableStyle() {
       return {
-        'display': 'flex',
-        'flex-direction': 'column',
-        'margin-left': '8px'
+        'display': 'inline-grid',
+        'margin-left': '8px',
+        'vertical-align': 'middle'
       }
     }
   }

@@ -11,6 +11,7 @@
 <script>
 import PaginationItem from './PaginationItem.vue';
 export default {
+  name: 'PaginationList',
   components: {
     PaginationItem
   },
