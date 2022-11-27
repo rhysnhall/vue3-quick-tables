@@ -85,7 +85,7 @@ const globals = {
 const cssConfig = {
   input: 'src/assets/DefaultTheme.css',
   output: {
-    file: 'dist/vue-quick-tables.css',
+    file: 'dist/vue3-quick-tables.css',
     format: 'es'
   },
   plugins: [
@@ -106,7 +106,7 @@ if (!argv.format || argv.format === 'es') {
     input: 'src/entry.esm.js',
     external,
     output: {
-      file: 'dist/vue-quick-tables.esm.js',
+      file: 'dist/vue3-quick-tables.esm.js',
       format: 'esm',
       exports: 'named',
     },
@@ -138,7 +138,7 @@ if (!argv.format || argv.format === 'cjs') {
     external,
     output: {
       compact: true,
-      file: 'dist/vue-quick-tables.ssr.js',
+      file: 'dist/vue3-quick-tables.ssr.js',
       format: 'cjs',
       name: 'QuickTables',
       exports: 'auto',
@@ -161,7 +161,7 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: 'dist/vue-quick-tables.min.js',
+      file: 'dist/vue3-quick-tables.min.js',
       format: 'iife',
       name: 'QuickTables',
       exports: 'auto',

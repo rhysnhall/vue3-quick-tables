@@ -1,13 +1,13 @@
 # Vue 3 QuickTables
 QuickTables is a quick table component for Vue 3. This package is still in development. Tests are still to come. Use at your own discretion.
 
-[![npm](https://img.shields.io/npm/v/vue-quick-tables.svg?color=%236e45e2)](https://www.npmjs.com/package/vue-quick-tables)
+[![npm](https://img.shields.io/npm/v/vue3-quick-tables.svg?color=%236e45e2)](https://www.npmjs.com/package/vue3-quick-tables)
 
 ## Installation
 ### Install via NPM
 
 ```
-npm install vue-quick-tables
+npm install vue3-quick-tables
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install vue-quick-tables
 You can register QuickTables globally:
 ```js
 import { createApp } from 'vue';
-import QuickTables from 'vue-quick-tables';
+import QuickTables from 'vue3-quick-tables';
 const app = createApp(App);
 app.component('QuickTables', QuickTables);
 ```
@@ -24,7 +24,7 @@ app.component('QuickTables', QuickTables);
 #### Local
 Locally install QuickTables by importing the component.
 ```js
-import QuickTables from 'vue-quick-tables';
+import QuickTables from 'vue3-quick-tables';
 
 export default {
   components: {
@@ -48,7 +48,7 @@ The component accepts static data as an **array** via the `rows` property.
 </template>
 
 <script>
-  import QuickTables from './vue-quick-tables';
+  import QuickTables from './vue3-quick-tables';
   export default {
     data() {
       return {
@@ -414,4 +414,4 @@ Help improve this package by contributing.
 Before opening a pull request, please first discuss the proposed changes via Github issue or <a href="mailto:hello@rhyshall.com">email</a>.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/korinsensei/vue-quick-tables/blob/master/LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/rhysnhall/vue3-quick-tables/blob/master/LICENSE.md) file for details
