@@ -29,7 +29,7 @@ export default {
       return this.column?.slot;
     },
     value() {
-      return this.column?.value;
+      return this.column?.value || this.column;
     }
   }
 }

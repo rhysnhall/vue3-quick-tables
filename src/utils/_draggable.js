@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export default class Draggable {
 
   constructor(ref, opts) {
@@ -18,7 +20,7 @@ export default class Draggable {
   assignRowIds() {
     for(let [,row] of Object.entries(this.rows)) {
       // Add a unique identifier to the row.
-      row._uuid = crypto.randomUUID();
+      row._uuid = uuidv4();
     }
   }
 

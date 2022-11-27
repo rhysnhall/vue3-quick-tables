@@ -6,12 +6,26 @@ export default defineComponent({
   name: 'ServeDev',
   components: {
     QuickTables
+  },
+  data() {
+    return {
+      headers: ['ID', 'Name'],
+      rows: [
+        ['1', 'Test User']
+      ]
+    }
   }
 });
 </script>
 
 <template>
   <div id="app">
-    <quick-tables />
+    <quick-tables
+      :headers="headers"
+      :rows="rows" />
   </div>
 </template>
+
+<style>
+@import '../src/assets/DefaultTheme.css';
+</style>
