@@ -57,8 +57,5 @@
   },
   "engines": {
     "node": ">=12"
-  },
-  "dependencies": {
-    "uuid": "^9.0.0"
   }
 }
