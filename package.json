@@ -1,6 +1,6 @@
 {
-  "name": "vue-quick-tables",
-  "version": "0.5.1",
+  "name": "vue3-quick-tables",
+  "version": "0.6.0",
   "description": "Vue 3 Table Component",
   "keywords": [
     "vue3",
@@ -10,13 +10,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:rhysnhall/vue-quick-tables"
+    "url": "git@github.com:rhysnhall/vue3-quick-tables"
   },
-  "main": "dist/vue-quick-tables.ssr.js",
-  "browser": "dist/vue-quick-tables.esm.js",
-  "module": "dist/vue-quick-tables.esm.js",
-  "unpkg": "dist/vue-quick-tables.min.js",
-  "style": "dist/vue-quick-tables.css",
+  "main": "dist/vue3-quick-tables.ssr.js",
+  "browser": "dist/vue3-quick-tables.esm.js",
+  "module": "dist/vue3-quick-tables.esm.js",
+  "unpkg": "dist/vue3-quick-tables.min.js",
+  "style": "dist/vue3-quick-tables.css",
   "files": [
     "dist/*",
     "src/**/*.vue"
