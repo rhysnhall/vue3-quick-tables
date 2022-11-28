@@ -29,7 +29,7 @@ export default {
       return this.column?.slot;
     },
     value() {
-      if(typeof this.column !== object) {
+      if(typeof this.column !== 'object') {
         return this.column;
       }
       return this.column?.value;
