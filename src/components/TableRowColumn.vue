@@ -29,10 +29,10 @@ export default {
       return this.column?.slot;
     },
     value() {
-      if(this.column?.value !== null && this.column?.value !== undefined) {
-        return this.column?.value;
+      if(typeof this.column !== object) {
+        return this.column;
       }
-      return this.column;
+      return this.column?.value;
     }
   }
 }
