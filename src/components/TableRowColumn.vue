@@ -29,7 +29,10 @@ export default {
       return this.column?.slot;
     },
     value() {
-      return this.column?.value || this.column;
+      if(this.column?.value !== null && this.column?.value !== undefined) {
+        return this.column?.value;
+      }
+      return this.column;
     }
   }
 }
