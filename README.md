@@ -154,7 +154,7 @@ Your component will have full access to the rows data.
 </template>
 ```
 
-This also works for the table headers with the exception of there being no row data.
+This also works for the table headers.
 
 ```js
 headers: [
@@ -167,6 +167,26 @@ headers: [
   :headers="headers">
   <template #item>
     <span>Custom header!</span>
+  </template>
+</quick-table>
+```
+
+You can load custom data into the header by adding a `data` property to the header object.
+
+```js
+headers: [
+  {
+    slot: 'item',
+    data: {
+      title: 'Custom title'
+    }
+  }
+]
+
+<quick-tables 
+  :headers="headers">
+  <template #item="{title}">
+    <span>{{title}}</span>
   </template>
 </quick-table>
 ```

@@ -2,7 +2,7 @@
   <th :class="classNames"
     @click.prevent="sortableCallback">
     <template v-if="slot">
-      <slot :name="slot"></slot>
+      <slot :name="slot?.name" v-bind="slot?.bind"></slot>
     </template>
     <template v-else-if="isSortable">
       <span>{{columnValue}}</span>
@@ -68,7 +68,7 @@ export default {
     },
     slot() {
       if(typeof this.column === 'object') {
-        return this.column?.slot;
+        return this.column?.customSlot;
       }
       return false;
     },
